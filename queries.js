@@ -3,6 +3,9 @@ db.books.find({ genre: "Fiction" })
 // 2. Find books published after a certain year
 db.books.find({ published_year: { $gt: 1950 } })
 
+// $gt (greater than) and $and operators
+db.books.find({ $and: [{ published_year: { $gt: 1950 } }, { in_stock: true }] })
+
 // 3. Find books by a specific author
 db.books.find({ author: "George Orwell" })
 
@@ -54,16 +57,7 @@ db.books.aggregate([
 ])
 
 // 2. Author with most books
-db.books.aggregate([
-  {
-    $group: {
-      _id: "$author",
-      bookCount: { $sum: 1 }
-    }
-  },
-  { $sort: { bookCount: -1 } },
-  { $limit: 1 }
-])
+db.books.aggregate([{ $group: { _id: "$genre", count: { $sum: 1 } } }])
 
 // 3. Books by publication decade
 db.books.aggregate([
