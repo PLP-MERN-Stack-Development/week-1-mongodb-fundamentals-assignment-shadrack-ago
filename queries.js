@@ -83,6 +83,6 @@ db.books.createIndex({ title: 1 })
 db.books.createIndex({ author: 1, published_year: 1 })
 // 3. Performance comparison
 // Without index
-db.books.find({ title: "1984" }).explain("executionStats")
+db.books.find({ title: "1984" }).explain()
 // With index
 db.books.find({ title: "1984" }).hint({ title: 1 }).explain("executionStats")
